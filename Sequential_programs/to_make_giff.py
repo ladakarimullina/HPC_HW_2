@@ -9,7 +9,7 @@ Original file is located at
 
 from PIL import Image
 
-nframes = 15
+nframes = 30
 imgs = []
 
 for i in range(nframes):
