@@ -58,14 +58,14 @@ void animatePPM(PPMImage &img){
         // Save last column
         temp[i] = img.data[i * img.x + (img.x - 1)];
     }
-    #pragma omp parallel
+    #pragma omp parallel for
     // Shifting columns to the right
     for (int i = 0; i < img.y; ++i) {
         for (int j = img.x - 1; j > 0; --j) {
             img.data[i * img.x + j] = img.data[i * img.x + (j - 1)];
         }
     }
-
+    #pragma omp parallel for
     // The last column goes the first column position
     for (int i = 0; i < img.y; ++i) {
         img.data[i * img.x] = temp[i];
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
     start = omp_get_wtime();
     PPMImage image;
     readPPM("car.ppm", image);
-    int nframes = 15;
+    int nframes = 30;
     for (int frame = 0; frame<nframes; ++frame){
       animatePPM(image);
       std::string filename = "new_car_" + std::to_string(frame) + ".ppm";
